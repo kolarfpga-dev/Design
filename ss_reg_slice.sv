@@ -7,6 +7,8 @@ module ss_reg_slice(
   interface out
 );
     `reg_decl(out_saved, 1, 'h0, in.clk, in.rst)
+    assign out.clk = in.clk;
+    assign out.rst = in.rst;
    always_comb begin
      out_saved_nxt = out.ready;
    end
