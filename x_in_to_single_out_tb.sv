@@ -1,11 +1,8 @@
-`include "ss.sv"
-`include "ss_macros.sv"
-`include "ss_reg_slice.sv"
 `include "generic_macros.sv"
 `timescale 1ns/1ps
 //Basic testbench for visual inspection of x_in_to_single_out.sv
 //Seems to be working 
-module x_in_to_single_out_tb;
+module x_in_to_single_out_tb();
   initial $display("x_in_to_single_out TB");
   localparam NUM_OUTS = 8;
   logic clk;

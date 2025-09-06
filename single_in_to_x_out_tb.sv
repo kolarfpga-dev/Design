@@ -1,6 +1,3 @@
-`include "ss.sv"
-`include "ss_macros.sv"
-`include "ss_reg_slice.sv"
 `include "generic_macros.sv"
 `timescale 1ns/1ps
 //Basic testbench for visual inspection of single_in_to_x_out.sv
