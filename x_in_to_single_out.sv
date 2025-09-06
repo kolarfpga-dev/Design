@@ -1,6 +1,6 @@
 //Converts a logic vector to a single output
 //Useful for utilization testing
-module x_in_to_single_out#(parameter NUM_INS)(
+module x_in_to_single_out#(parameter NUM_INS = 8)(
     input logic clk,
     input logic rst,
     input logic [NUM_INS -1 :0] in,

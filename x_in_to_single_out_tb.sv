@@ -7,7 +7,7 @@ module x_in_to_single_out_tb();
   localparam NUM_OUTS = 8;
   logic clk;
   logic rst;
-  logic in[NUM_OUTS -1:0];
+  logic [NUM_OUTS -1:0]in;
   logic out;
   x_in_to_single_out#(.NUM_OUTS(NUM_OUTS)) sitxo_inst(
     .clk(clk),
