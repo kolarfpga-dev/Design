@@ -2,27 +2,40 @@
 `include "ss_macros.sv"
 `include "ss_reg_slice.sv"
 `include "generic_macros.sv"
+`timescale 1ns/1ps
+//Basic register slice tb that does not completely follow AXI-S protocol
+//This is because the valid is deasserted randomly
+//Just used for visual inspection at this point 
 module register_slice_tb;
-  initial $display("Hello world");
+  initial $display("Register Slice TB");
   localparam NUM_BYTES = 8;
   localparam USER_BITS = 2;
   ss#(.NUM_BYTES(NUM_BYTES), .USER_BITS(USER_BITS)) ss_inst();
   `SS_CLONE(ss_inst, ss_inst_clone)
+  ss_reg_slice ss_reg_slice_inst(
+    .in(ss_inst),
+    .out(ss_inst_clone)
+  );
   initial begin
-    in.rst = 'h1;
-    in.clk = 'h0;
+    ss_inst.rst = 'h1;
+    ss_inst.clk = 'h0;
     //Hold rst for a few cycles
-    for(int i = 0; i < 5; i++) in.clk = ~in.clk;
-    in.rst = 'h0;//Lower reset
+    for(int i = 0; i < 5; i++) begin 
+      ss_inst.clk = ~ss_inst.clk;
+      #10;
+    end
+    ss_inst.rst = 'h0;//Lower reset
     for(int i = 0; i < 100; i++) begin
       //Send in the data...randomly
-      in.clk = ~in.clk;
-      in.valid = $urandom_range(0,1);
-      out.ready = $urandom_range(0,1);//Randomly backpressure
-      in.keep = $urandom_range(0, (NUM_BYTES / 8) - 1);
-      in.last = $urandom_range(0,1);
-      in.user = $urandom;
-      in.data = $urandom;
+      ss_inst.clk = ~ss_inst.clk;
+      ss_inst.valid = $urandom;
+      ss_inst_clone.ready = $urandom;//Randomly backpressure
+      ss_inst.keep = $urandom;
+      ss_inst.last = $urandom;
+      ss_inst.user = $urandom;
+      ss_inst.data = $urandom;
+      #10;
     end
-    initial $display("Ending simulation");
+    $display("Ending simulation");
+  end
 endmodule
