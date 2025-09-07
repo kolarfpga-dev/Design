@@ -6,6 +6,7 @@ module ss_reg_slice(
   interface in,
   interface out
 );
+    //Declare a register to save the ready signal driven by the slave
     `reg_decl(out_saved, 1, 'h0, in.clk, in.rst)
     assign out.clk = in.clk;
     assign out.rst = in.rst;

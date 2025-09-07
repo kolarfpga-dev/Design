@@ -1,0 +1,3 @@
+Utilization for 64-bit is 51 LUTs 74 Registers
+Something doesn't seem right, there should be more outputs,
+but the number of registers seems correct 
