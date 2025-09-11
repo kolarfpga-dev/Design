@@ -7,6 +7,8 @@
 //This is because the valid is deasserted randomly
 //Just used for visual inspection at this point 
 //TO DO: Can parameterize this testbench at the top level
+//TO DO: Support datawidth testing over 64-bits by concatenating $urandom
+//OR modify vector values of keep, data, and user since they can be more than 64-bits
 //to check more use cases 
 module register_slice_tb;
   initial $display("Register Slice TB");
@@ -38,7 +40,7 @@ module register_slice_tb;
           ss_inst.keep  = $urandom;
           ss_inst.last  = $urandom;
           ss_inst.user  = $urandom;
-          ss_inst.data  = $urandom;
+          ss_inst.data  = {$urandom, $urandom};
         end
       end
       #10;

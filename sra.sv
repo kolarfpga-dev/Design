@@ -1,5 +1,6 @@
 //Simple Register Access Interface
 //Essentially just two ss(Simple Stream) interfaces
+//Not recommended to reach into 
 `include "generic_macros.sv"
 
 interface sra#(
@@ -7,7 +8,8 @@ interface sra#(
     parameter ADDR_WIDTH = 8,       //Address width for write and reads
     parameter M_USER_BITS = 2,      //User bits for M->S transactions
     parameter S_USER_BITS = 2       //User bits for S->M transactions
-);
+)
+();
   localparam SSM_USER_WIDTH =   M_USER_BITS + ADDR_WIDTH;//Simple stream M->S user width
   localparam SSS_USER_WIDTH =   S_USER_BITS + ADDR_WIDTH;//Simple stream S-> user width
 
