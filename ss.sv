@@ -22,12 +22,54 @@ interface ss #(
   parameter NUM_BYTES = 1,
   parameter USER_BITS = 1
 );
+  //Local parameters
+  localparam DATA_SIZE = (NUM_BYTES * 8);
+  localparam KEEP_SIZE = NUM_BYTES;
+
   logic clk;
   logic rst;
   logic valid;
   logic ready;
-  logic [(NUM_BYTES * 8) - 1:0] data;
-  logic [NUM_BYTES - 1:0] keep;
+  logic [DATA_SIZE - 1:0] data;
+  logic [KEEP_SIZE - 1:0] keep;
   logic last;
   logic [USER_BITS - 1:0] user;
+
+  //Interface related functions
+  function logic get_valid();
+    return valid;
+  endfunction
+  function void set_valid(logic valid_nxt);
+    valid = valid_nxt;
+  endfunction
+  function logic get_ready();
+    return ready;
+  endfunction
+  function void set_ready(logic ready_nxt);
+    ready = ready_nxt;
+  endfunction
+  function logic[DATA_SIZE-1:0] get_data();
+    return data;
+  endfunction
+  function void set_data(logic [DATA_SIZE-1:0] data_nxt);
+    data = data_nxt;
+  endfunction
+  function logic[KEEP_SIZE-1:0] get_keep();
+    return keep;
+  endfunction
+  function void set_keep(logic [KEEP_SIZE - 1:0] keep_nxt);
+    keep = keep_nxt;
+  endfunction
+  function logic get_last();
+    return last;
+  endfunction
+  function logic set_last(logic last_nxt);
+    last = last_nxt;
+  endfunction
+  function logic[USER_BITS-1:0] get_user();
+    return user;
+  endfunction
+  function void set_user(logic [USER_BITS-1:0] user_nxt);
+    user = user_nxt;
+  endfunction
 endinterface

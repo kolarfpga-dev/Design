@@ -28,12 +28,16 @@ module register_slice_tb;
     for(int i = 0; i < 100; i++) begin
       //Send in the data...randomly
       ss_inst.clk = ~ss_inst.clk;
-      ss_inst.valid = $urandom;
-      ss_inst_clone.ready = $urandom;//Randomly backpressure
-      ss_inst.keep = $urandom;
-      ss_inst.last = $urandom;
-      ss_inst.user = $urandom;
-      ss_inst.data = $urandom;
+      if(ss_inst.clk)begin//Change data at positive edge of clock
+        ss_inst_clone.ready = $urandom;//Randomly backpressure
+        if(ss_inst_clone.ready || !ss_inst.valid) begin//Do not change values until slave accepts
+          ss_inst.valid = $urandom;
+          ss_inst.keep  = $urandom;
+          ss_inst.last  = $urandom;
+          ss_inst.user  = $urandom;
+          ss_inst.data  = $urandom;
+        end
+      end
       #10;
     end
     $display("Ending simulation");

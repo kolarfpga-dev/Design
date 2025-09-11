@@ -22,6 +22,7 @@ module ss_reg_slice(
       out.user <= in.user;
     end
   end
+  assign in.ready = out_saved_reg;
 endmodule
         
   

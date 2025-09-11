@@ -5,6 +5,7 @@
 ss#(.NUM_BYTES(original_inst_name.NUM_BYTES), .USER_BITS(original_inst_name.USER_BITS)) cloned_inst_name();
 
 //Connects an ss-interface to an existing interface
+//Done via using assign
 `define SS_INTF_CONNECT(master_interface, slave_interface) \
   assign slave_interface.clk=master_interface.clk; \
   assign slave_interface.rst=master_interface.rst;\
@@ -15,6 +16,13 @@ ss#(.NUM_BYTES(original_inst_name.NUM_BYTES), .USER_BITS(original_inst_name.USER
   assign slave_interface.last=master_interface.last;\
   assign slave_interface.user=master_interface.user;
 
+`define SS_COMB_CONNECT(master_interface, slave_interface)\
+  slave_interface.valid=master_interface.valid;\
+  master_interface.ready=slave_interface.ready;\
+  slave_interface.data=master_interface.data;\
+  slave_interface.keep=master_interface.keep;\
+  slave_interface.last=master_interface.last;\
+  slave_interface.user=master_interface.user;
 //Clone and Connect
 `define SS_INTF_CC(mast_intf_name, slave_intf_name)\
 `SS_CLONE(mast_intf_name, slave_intf_name)\
