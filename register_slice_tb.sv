@@ -6,13 +6,15 @@
 //Basic register slice tb that does not completely follow AXI-S protocol
 //This is because the valid is deasserted randomly
 //Just used for visual inspection at this point 
+//TO DO: Can parameterize this testbench at the top level
+//to check more use cases 
 module register_slice_tb;
   initial $display("Register Slice TB");
   localparam NUM_BYTES = 8;
   localparam USER_BITS = 2;
   ss#(.NUM_BYTES(NUM_BYTES), .USER_BITS(USER_BITS)) ss_inst();
   `SS_CLONE(ss_inst, ss_inst_clone)
-  ss_reg_slice ss_reg_slice_inst(
+  ss_reg_slice_n#(.NUM_REG_SLICES(3)) ss_reg_slice_inst(
     .in(ss_inst),
     .out(ss_inst_clone)
   );
@@ -28,9 +30,10 @@ module register_slice_tb;
     for(int i = 0; i < 100; i++) begin
       //Send in the data...randomly
       ss_inst.clk = ~ss_inst.clk;
+      #1;
       if(ss_inst.clk)begin//Change data at positive edge of clock
         ss_inst_clone.ready = $urandom;//Randomly backpressure
-        if(ss_inst_clone.ready || !ss_inst.valid) begin//Do not change values until slave accepts
+        if(ss_inst.ready || !ss_inst.valid) begin//Do not change values until slave accepts
           ss_inst.valid = $urandom;
           ss_inst.keep  = $urandom;
           ss_inst.last  = $urandom;
