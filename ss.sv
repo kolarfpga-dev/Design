@@ -72,4 +72,10 @@ interface ss #(
   function void set_user(logic [USER_BITS-1:0] user_nxt);
     user = user_nxt;
   endfunction
+  function logic get_rst();
+    return rst;
+  endfunction
+  function void set_rst(logic [USER_BITS-1:0] rst_nxt);
+    rst = rst_nxt;
+  endfunction
 endinterface
