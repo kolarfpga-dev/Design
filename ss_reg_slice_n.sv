@@ -1,6 +1,7 @@
 //Generates n number of register slices
 //Creates 0 or more register slices
 //Does NOT perform any type of clock domain crossing
+`include "ss_macros.sv"
 module ss_reg_slice_n#(parameter NUM_REG_SLICES = 2)(
   interface in,
   interface out

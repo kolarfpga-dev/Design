@@ -52,3 +52,4 @@ always @ (posedge clk) begin
     out <= out_no_buf;
 end
 endmodule
+

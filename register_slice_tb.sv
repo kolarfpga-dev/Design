@@ -20,13 +20,16 @@ module register_slice_tb;
     .in(ss_inst),
     .out(ss_inst_clone)
   );
+  //Currently running at 100MHz (10ns period and 5ns between rising and falling)
   initial begin
     ss_inst.rst = 'h1;
     ss_inst.clk = 'h0;
-    //Hold rst for a few cycles
-    for(int i = 0; i < 5; i++) begin 
+    ss_inst_clone.ready = 'h0;
+    ss_inst.valid = 'h0;
+    //Hold rst for a number of cycles to allow to propogate ready to master and valid to slave
+    for(int i = 0; i < 10; i++) begin 
       ss_inst.clk = ~ss_inst.clk;
-      #10;
+      #5;
     end
     ss_inst.rst = 'h0;//Lower reset
     for(int i = 0; i < 100; i++) begin
@@ -43,7 +46,7 @@ module register_slice_tb;
           ss_inst.data  = {$urandom, $urandom};
         end
       end
-      #10;
+      #4;
     end
     $display("Ending simulation");
   end
